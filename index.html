@@ -11,12 +11,12 @@
     <video id="video" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video>
 
     <div class="controls" id="controls">
-      <button id="play-pause" class="control-btn">
+      <button id="play-pause" class="control-btn" onclick="playPause()">
         <img src="/icons/play.svg" alt="Play">
       </button>
 
       <div class="progress-container">
-        <input type="range" id="progress" min="0" value="0">
+        <input type="range" id="progress-bar" min="0" value="0">
       </div>
 
       <span id="time">0:00 / 0:00</span>
