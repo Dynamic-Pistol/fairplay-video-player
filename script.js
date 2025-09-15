@@ -86,7 +86,7 @@ speedOptions.forEach((option) => {
   });
 });
 
-function pageClicked(){
+function pageClicked(e){
   if (!settingsBtn.contains(e.target) && !settingsMenu.contains(e.target)) {
     settingsMenu.classList.remove("active");
   }
