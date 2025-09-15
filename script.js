@@ -21,22 +21,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   playPauseBtn.addEventListener("click", () => {
-    if (video.paused) {
-      video.play();
-      playPauseBtn.querySelector("img").src = "/icons/pause.svg";
-    } else {
-      video.pause();
-      playPauseBtn.querySelector("img").src = "/icons/play.svg";
-    }
+    togglePlayPause();
   });
 
   video.addEventListener("click", () => {
-    if (video.paused) {
-      video.play();
-      playPauseBtn.querySelector("img").src = "/icons/pause.svg";
-    } else {
-      video.pause();
-      playPauseBtn.querySelector("img").src = "/icons/play.svg";
+    togglePlayPause();
+  });
+  video.addEventListener("keydown", (event_key) => {
+    const key = event_key.key;
+    if (key == " ") {
+      togglePlayPause();
+    } else if (key == "f") {
+      toggleFullscreen();
+    } else if (key == "ArrowRight") {
+      video.currentTime += 10;
+    } else if (key == "ArrowLeft") {
+      video.currentTime -= 10;
     }
   });
 
@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   video.addEventListener("loadedmetadata", () => {
     const value = video.volume * 100;
     volumeSlider.style.background = `linear-gradient(to right, var(--accent-color) ${value}%, #666 ${value}%)`;
+    video.dispatchEvent(new Event("timeupdate"))
   });
 
   volumeBtn.addEventListener("click", () => {
@@ -77,13 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   fullscreenBtn.addEventListener("click", () => {
-    if (!document.fullscreenElement) {
-      video.parentElement.requestFullscreen();
-      fullscreenBtn.querySelector("img").src = "/icons/exit-full-screen.svg";
-    } else {
-      document.exitFullscreen();
-      fullscreenBtn.querySelector("img").src = "/icons/full-screen.svg";
-    }
+    toggleFullscreen();
   });
 
   function showControls() {
@@ -96,9 +91,27 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 2000);
   }
+  function togglePlayPause() {
+    if (video.paused) {
+      video.play();
+      playPauseBtn.querySelector("img").src = "/icons/pause.svg";
+    } else {
+      video.pause();
+      playPauseBtn.querySelector("img").src = "/icons/play.svg";
+    }
+  }
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      video.parentElement.requestFullscreen();
+      fullscreenBtn.children[0].src = "/icons/exit-full-screen.svg";
+    } else {
+      document.exitFullscreen();
+      fullscreenBtn.children[0].src = "/icons/full-screen.svg";
+    }
+  }
 
-  document.addEventListener("mousemove", showControls);
-  document.addEventListener("keydown", showControls);
+  video.addEventListener("mousemove", showControls);
+  video.addEventListener("keydown", showControls);
   video.addEventListener("play", showControls);
   video.addEventListener("pause", () => controls.classList.remove("hidden"));
 
