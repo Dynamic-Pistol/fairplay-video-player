@@ -73,7 +73,7 @@ video {
   flex: 1;
 }
 
-#progress {
+#progress-bar {
   width: 100%;
   appearance: none;
   height: 6px;
